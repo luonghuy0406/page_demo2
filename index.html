@@ -7,7 +7,7 @@
       border: 1px solid black;
     }
   </style>
-    <script type="text/javascript" src="https://luonghuy0406.github.io/page/index.js"></script>
+  <script type="text/javascript" src="https://luonghuy0406.github.io/page/index.js"></script>
 </head>
 <body>
   <video id="videoElement" autoplay></video>
@@ -20,6 +20,7 @@
     navigator.mediaDevices.getUserMedia({ video: true })
       .then((stream) => {
         video.srcObject = stream;
+        video.play(); // Start playing the video stream
       })
       .catch((error) => {
         console.error('Error accessing camera:', error);
@@ -31,7 +32,9 @@
       requestAnimationFrame(renderVideo);
     }
 
-    renderVideo();
+    video.addEventListener('play', () => {
+      renderVideo();
+    });
   </script>
 </body>
 </html>
