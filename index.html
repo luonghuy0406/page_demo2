@@ -1,21 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://builder.rtworkspace.com/assets/index.css">
-    <script type="text/javascript" src="https://builder.rtworkspace.com/assets/index.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" crossorigin="anonymous"></script>
+  <title>Video Stream to Canvas</title>
+  <style>
+    #canvasElement {
+      border: 1px solid black;
+    }
+  </style>
+    <script type="text/javascript" src="https://luonghuy0406.github.io/page/index.js"></script>
 </head>
 <body>
-    <h1>My First JavaScript</h1>
+  <video id="videoElement" autoplay></video>
+  <canvas id="canvasElement"></canvas>
 
-<button type="button"
-onclick="document.getElementById('demo').innerHTML = Date()">
-Click me to display Date and Time.</button>
+  <script>
+    const video = document.getElementById('videoElement');
+    const canvas = document.getElementById('canvasElement');
 
-<p id="demo"></p>
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        video.srcObject = stream;
+      })
+      .catch((error) => {
+        console.error('Error accessing camera:', error);
+      });
+
+    function renderVideo() {
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      requestAnimationFrame(renderVideo);
+    }
+
+    renderVideo();
+  </script>
 </body>
 </html>
